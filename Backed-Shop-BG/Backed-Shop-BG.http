@@ -1,0 +1,6 @@
+@Backed_Shop_BG_HostAddress = http://localhost:5158
+
+GET {{Backed_Shop_BG_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
