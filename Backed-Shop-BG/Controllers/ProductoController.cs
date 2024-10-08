@@ -1,6 +1,9 @@
-﻿using Business.Producto;
-using Microsoft.AspNetCore.Mvc;
-using Models.Responses;
+﻿using Microsoft.AspNetCore.Mvc;
+using Helpers;
+using Interfaces;
+using Models;
+using System.Net;
+using Models.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,26 +13,40 @@ namespace Backed_Shop_BG.Controllers
     [ApiController]
     public class ProductoController : ControllerBase
     {
-        Response response = new Response();
-        private readonly IProductoBusiness _productoBussiness;
-        public ProductoController(IProductoBusiness productoBusiness)
+        private readonly IProductoService _productoService;
+        public ProductoController(IProductoService productoService)
         {
-            this._productoBussiness = productoBusiness;              
+            _productoService = productoService;
         }
+
         [HttpGet("listado-producto")]
         public async Task<IActionResult> GetProductos()
         {
             try
             {
-                response = await _productoBussiness.GetAllProducts();
+                var listadoProductos = await _productoService.ObtenerProductosServices();
+                return Ok(
+                    new Response<List<Producto>>()
+                    { 
+                        Code=HttpStatusCode.OK,
+                        Data = listadoProductos,
+                        Message = "Consulta Exitosa"
+                        
+                    }
+                    );
             }
             catch (Exception ex)
             {
-                response.Code = "00";
-                response.Data = null;
-                response.Message = "Producto Controller / GetProductos / "+ex.Message;
+                return BadRequest(
+                    new Response<string>()
+                    {
+                        Code = HttpStatusCode.InternalServerError,
+                        Message = ex.Message,
+                        Data = null
+                    }
+                    );
+ 
             }
-            return Ok(response);
         }
     }
 }

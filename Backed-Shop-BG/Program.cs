@@ -1,10 +1,7 @@
-using Business.PersonaBusiness;
-using Business.Producto;
-using Business.Usuario;
-using Mappings.Persona;
-using Mappings.Producto;
-using Mappings.Usuario;
-
+using DataContext;
+using Interfaces;
+using Microsoft.EntityFrameworkCore;
+using Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -16,18 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// ? Context
+builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString")));
+
 // ? Inyección de Dependencia
 // ! Producto
-builder.Services.AddScoped<IProductoMapping, ProductoMapping>();
-builder.Services.AddScoped<IProductoBusiness, ProductoBusiness>();
-
-// ! Usuario
-builder.Services.AddScoped<IUsuarioMapping, UsuarioMapping>();
-builder.Services.AddScoped<IUsuarioBusiness, UsuarioBusiness>();
-
-// ! Persona
-builder.Services.AddScoped<IPersonaMapping, PersonaMapping>();
-builder.Services.AddScoped<IPersonaBusiness, PersonaBusiness>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 
 
 
