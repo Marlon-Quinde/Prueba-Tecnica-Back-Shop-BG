@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Helpers;
-using Interfaces;
 using Models;
 using System.Net;
-using Models.DTO;
+using Models.DTO.Producto;
+using Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,7 +26,7 @@ namespace Backed_Shop_BG.Controllers
             {
                 var listadoProductos = await _productoService.ObtenerProductosServices();
                 return Ok(
-                    new Response<List<Producto>>()
+                    new Response<List<ProductoDTO>>()
                     { 
                         Code=HttpStatusCode.OK,
                         Data = listadoProductos,
@@ -46,6 +46,26 @@ namespace Backed_Shop_BG.Controllers
                     }
                     );
  
+            }
+        }
+
+
+        [HttpPost("crear")]
+        public async Task<IActionResult> CrearProducto(CrearProductoDTO producto) 
+        {
+            try
+            {
+                var response = await _productoService.CrearProductoServices(producto);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new Response<string>() { 
+                    Code = HttpStatusCode.InternalServerError,
+                    Data = null,
+                    Message = ex.Message
+                }
+                );
             }
         }
     }

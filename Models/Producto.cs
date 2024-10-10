@@ -21,9 +21,6 @@ public partial class Producto
     public double Precio { get; set; }
 
     [Required]
-    public int IdCategoria { get; set; }
-
-    [Required]
     public bool estado { get; set; }
     public Categoria Categoria { get; set; }
 }

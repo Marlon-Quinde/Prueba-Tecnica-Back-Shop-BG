@@ -9,7 +9,6 @@
   <ItemGroup>
     <ProjectReference Include="..\DataContext\DataContext.csproj" />
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
-    <ProjectReference Include="..\Interfaces\Interfaces.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
   </ItemGroup>
 

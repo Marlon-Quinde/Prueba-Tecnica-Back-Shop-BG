@@ -1,5 +1,4 @@
 using DataContext;
-using Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Services;
 var builder = WebApplication.CreateBuilder(args);
@@ -14,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // ? Context
-builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString")));
+builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ? Inyección de Dependencia
 // ! Producto

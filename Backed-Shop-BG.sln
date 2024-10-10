@@ -7,13 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backed-Shop-BG", "Backed-Sh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{72D4479B-2FD3-47D5-AAA4-DAA8D35FD2A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{47111FA9-5DB9-46C7-B7FA-6CF6CC49191E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataContext", "DataContext\DataContext.csproj", "{FEDB6AE3-A13F-476F-B0F5-49BDF729215D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataContext", "DataContext\DataContext.csproj", "{FEDB6AE3-A13F-476F-B0F5-49BDF729215D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{60B165DF-8208-4BE6-8076-42069FCB4560}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{60B165DF-8208-4BE6-8076-42069FCB4560}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Helpers", "Helpers\Helpers.csproj", "{64488714-933D-4C78-8E71-ADA170F0BA84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "Helpers\Helpers.csproj", "{64488714-933D-4C78-8E71-ADA170F0BA84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{72D4479B-2FD3-47D5-AAA4-DAA8D35FD2A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72D4479B-2FD3-47D5-AAA4-DAA8D35FD2A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72D4479B-2FD3-47D5-AAA4-DAA8D35FD2A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{47111FA9-5DB9-46C7-B7FA-6CF6CC49191E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{47111FA9-5DB9-46C7-B7FA-6CF6CC49191E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{47111FA9-5DB9-46C7-B7FA-6CF6CC49191E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{47111FA9-5DB9-46C7-B7FA-6CF6CC49191E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FEDB6AE3-A13F-476F-B0F5-49BDF729215D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FEDB6AE3-A13F-476F-B0F5-49BDF729215D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEDB6AE3-A13F-476F-B0F5-49BDF729215D}.Release|Any CPU.ActiveCfg = Release|Any CPU

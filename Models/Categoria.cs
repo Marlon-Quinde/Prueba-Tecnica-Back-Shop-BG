@@ -12,6 +12,9 @@ public partial class Categoria
     public int Id { get; set; }
 
     [Required]
-    public string Nombre { get; set; } 
+    public string Nombre { get; set; }
+
+    [Required]
+    public bool Estado { get; set; }
     public ICollection<Producto> Productos { get; set; }
 }
