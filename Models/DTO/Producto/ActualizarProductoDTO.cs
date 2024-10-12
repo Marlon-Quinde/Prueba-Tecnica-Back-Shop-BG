@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace Models.DTO.Producto
 {
-    public class CrearProductoDTO
+    public class ActualizarProductoDTO
     {
-
         public string Nombre { get; set; }
 
         public int Stock { get; set; } = 0;

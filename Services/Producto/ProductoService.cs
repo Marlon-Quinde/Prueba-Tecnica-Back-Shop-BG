@@ -63,7 +63,7 @@ namespace Services
         {
             try
             {
-                var idProducto = producto.IdCategoria;
+                var idProducto = producto.CategoriaId;
                 var categoria = await _dbContext.Categoria.Select(
                     cat => new CategoriaDTO()
                     {
@@ -83,13 +83,14 @@ namespace Services
                     };
                 }
 
-                var productoAgregado = await _dbContext.Productos.AddAsync((new CrearProductoDTO()
+                Producto productoNuevo = new Producto()
                 {
                     Stock = producto.Stock,
                     CategoriaId = producto.CategoriaId,
                     Nombre = producto.Nombre,
                     Precio = producto.Precio,
-                }));
+                };
+                var productoAgregado = await _dbContext.Productos.AddAsync(productoNuevo);
 
                 await _dbContext.SaveChangesAsync();
 
@@ -113,6 +114,14 @@ namespace Services
 
             }
         }
+
+        public Task<Response<string>> ActualizarProductoService(ActualizarProductoDTO producto)
+        {
+
+            return null;
+        }
+
+
     }
 
 }

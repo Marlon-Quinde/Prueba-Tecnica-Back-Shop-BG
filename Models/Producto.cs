@@ -18,9 +18,13 @@ public partial class Producto
     public int Stock { get; set; }
 
     [Required]
-    public double Precio { get; set; }
+    [Column(TypeName = "decimal(18,2)")]
+    public decimal Precio { get; set; }
 
     [Required]
-    public bool estado { get; set; }
+    public bool estado { get; set; } = true;
+
+    [Required]
+    public int CategoriaId { get; set; }
     public Categoria Categoria { get; set; }
 }

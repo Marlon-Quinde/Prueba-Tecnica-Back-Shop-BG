@@ -14,7 +14,7 @@ namespace Models.DTO
 
         public int Stock { get; set; }
 
-        public double Precio { get; set; }
+        public decimal Precio { get; set; }
 
         public string Categoria { get; set; }
     }
