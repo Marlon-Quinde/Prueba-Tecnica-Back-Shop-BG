@@ -69,5 +69,26 @@ namespace Backed_Shop_BG.Controllers
                 );
             }
         }
+
+        [HttpPut("actualizar/{id}")]
+        public async Task<IActionResult> ActualizarProductoController(int id, ActualizarProductoDTO payload)
+        {
+            try
+            {
+                var response = await _productoService.ActualizarProductoServices(id, payload);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new Response<string>()
+                {
+                    Code = HttpStatusCode.InternalServerError,
+                    Data = null,
+                    Message = ex.Message
+                }
+                );
+            }
+            return null;
+        }
     }
 }

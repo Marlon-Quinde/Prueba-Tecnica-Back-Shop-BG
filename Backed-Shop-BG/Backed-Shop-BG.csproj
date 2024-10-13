@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AutoMapperDemo\AutoMapperDemo.csproj" />
     <ProjectReference Include="..\DataContext\DataContext.csproj" />
     <ProjectReference Include="..\Helpers\Helpers.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />

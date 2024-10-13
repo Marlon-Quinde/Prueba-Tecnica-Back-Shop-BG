@@ -8,5 +8,6 @@ namespace Services
     {
         Task<Response<string>> CrearProductoServices(CrearProductoDTO producto);
         Task<List<ProductoDTO>> ObtenerProductosServices();
+        Task<Response<string>> ActualizarProductoServices(int idProducto, ActualizarProductoDTO payload);
     }
 }

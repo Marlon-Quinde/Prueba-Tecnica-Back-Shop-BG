@@ -15,6 +15,9 @@ builder.Services.AddSwaggerGen();
 // ? Context
 builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// ? AutoMapper
+builder.Services.AddAutoMapper(typeof(Program));
+
 // ? Inyección de Dependencia
 // ! Producto
 builder.Services.AddScoped<IProductoService, ProductoService>();

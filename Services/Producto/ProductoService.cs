@@ -1,4 +1,5 @@
-﻿using DataContext;
+﻿using AutoMapper;
+using DataContext;
 using Helpers;
 using Microsoft.EntityFrameworkCore;
 using Models;
@@ -12,14 +13,16 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+// namespace Services
 {
     public class ProductoService : IProductoService
     {
         private readonly ShopContext _dbContext;
-        public ProductoService(ShopContext dbContext)
-        {
+        private readonly IMapper _mapper;
+        public ProductoService(ShopContext dbContext, IMapper mapper)
+        // {
             this._dbContext = dbContext;
+            _mapper = mapper;
         }
         public async Task<List<ProductoDTO>> ObtenerProductosServices()
         {
@@ -34,6 +37,7 @@ namespace Services
                     Nombre = dto.Producto.Nombre,
                     Precio = dto.Producto.Precio,
                     Id = dto.Producto.Id,
+                    Stock = dto.Producto.Stock,
                     Categoria = dto.Categoria.Nombre
                 }
                 )
@@ -59,11 +63,11 @@ namespace Services
 
             return listproducto;
         }
-        public async Task<Response<string>> CrearProductoServices(CrearProductoDTO producto)
+        public async Task<Response<string>> CrearProductoServices(CrearProductoDTO payload)
         {
             try
             {
-                var idProducto = producto.CategoriaId;
+                var idProducto = payload.CategoriaId;
                 var categoria = await _dbContext.Categoria.Select(
                     cat => new CategoriaDTO()
                     {
@@ -85,10 +89,10 @@ namespace Services
 
                 Producto productoNuevo = new Producto()
                 {
-                    Stock = producto.Stock,
-                    CategoriaId = producto.CategoriaId,
-                    Nombre = producto.Nombre,
-                    Precio = producto.Precio,
+                    Stock = payload.Stock,
+                    CategoriaId = payload.CategoriaId,
+                    Nombre = payload.Nombre,
+                    Precio = payload.Precio,
                 };
                 var productoAgregado = await _dbContext.Productos.AddAsync(productoNuevo);
 
@@ -115,10 +119,48 @@ namespace Services
             }
         }
 
-        public Task<Response<string>> ActualizarProductoService(ActualizarProductoDTO producto)
+        public async Task<Response<string>> ActualizarProductoServices(int idProducto, ActualizarProductoDTO payload)
         {
+            try
+            {
+                var producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
 
-            return null;
+                if (producto == null)
+                {
+                    return new Response<string>()
+                    {
+                        Code = HttpStatusCode.BadRequest,
+                        Message = $"No existe el producto con id: {idProducto}",
+                        Data = null
+                    };
+                }
+
+                //producto.Stock = payload.Stock;
+                //producto.Precio = payload.Precio;
+                //producto.Nombre = payload.Nombre;
+                //producto.CategoriaId = payload.CategoriaId;
+                _mapper.Map(payload, producto);
+
+
+                var productoActualizado = await _dbContext.SaveChangesAsync();
+
+
+                return new Response<string>()
+                {
+                    Code = HttpStatusCode.OK,
+                    Data = $"Producto {productoActualizado}",
+                    Message = "Producto Actualizado con exito"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response<string>()
+                {
+                    Code = HttpStatusCode.InternalServerError,
+                    Message = ex.Message,
+                    Data = null
+                };
+            }
         }
 
 
