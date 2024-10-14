@@ -20,12 +20,12 @@ namespace Backed_Shop_BG.Controllers
             _productoService = productoService;
         }
 
-        [HttpGet("listado-producto")]
-        public async Task<IActionResult> GetProductos()
+        [HttpGet("listado")]
+        public async Task<IActionResult> GetProductos([FromQuery] string? nombre)
         {
             try
             {
-                var listadoProductos = await _productoService.ObtenerProductosServices();
+                var listadoProductos = await _productoService.ObtenerProductosService(nombre);
                 return Ok(
                     new Response<List<ProductoDTO>>()
                     { 
@@ -56,7 +56,7 @@ namespace Backed_Shop_BG.Controllers
         {
             try
             {
-                var response = await _productoService.CrearProductoServices(producto);
+                var response = await _productoService.CrearProductoService(producto);
                 return Ok(response);
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace Backed_Shop_BG.Controllers
         {
             try
             {
-                var response = await _productoService.ActualizarProductoServices(id, payload);
+                var response = await _productoService.ActualizarProductoService(id, payload);
                 return Ok(response);
             }
             catch (Exception ex)

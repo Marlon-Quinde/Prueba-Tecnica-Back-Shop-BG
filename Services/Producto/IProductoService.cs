@@ -6,8 +6,9 @@ namespace Services
 {
     public interface IProductoService
     {
-        Task<Response<string>> CrearProductoServices(CrearProductoDTO producto);
-        Task<List<ProductoDTO>> ObtenerProductosServices();
-        Task<Response<string>> ActualizarProductoServices(int idProducto, ActualizarProductoDTO payload);
+        Task<Response<string>> CrearProductoService(CrearProductoDTO producto);
+        Task<List<ProductoDTO>> ObtenerProductosService(string nombre, bool estado);
+        Task<Response<string>> ActualizarProductoService(int idProducto, ActualizarProductoDTO payload);
+        Task<Response<string>> EliminacionFisicaProductoServices(int id);
     }
 }

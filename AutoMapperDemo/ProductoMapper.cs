@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AutoMapperDemo
 {
-    internal class ProductoMapper: Profile
+    public class ProductoMapper: Profile
     {
         public ProductoMapper()
         {

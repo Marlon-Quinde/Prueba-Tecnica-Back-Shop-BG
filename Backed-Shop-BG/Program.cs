@@ -1,3 +1,4 @@
+using AutoMapperDemo;
 using DataContext;
 using Microsoft.EntityFrameworkCore;
 using Services;
@@ -16,7 +17,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ShopContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // ? AutoMapper
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddAutoMapper(typeof(ProductoMapper));
 
 // ? Inyección de Dependencia
 // ! Producto

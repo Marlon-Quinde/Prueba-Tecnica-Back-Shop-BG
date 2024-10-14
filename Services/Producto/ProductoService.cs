@@ -13,21 +13,21 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-// namespace Services
+ namespace Services
 {
     public class ProductoService : IProductoService
     {
         private readonly ShopContext _dbContext;
         private readonly IMapper _mapper;
         public ProductoService(ShopContext dbContext, IMapper mapper)
-        // {
+        {
             this._dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<List<ProductoDTO>> ObtenerProductosServices()
+        public async Task<List<ProductoDTO>> ObtenerProductosService(string nombre, bool estado)
         {
-            List<ProductoDTO> listproducto = await
-                _dbContext.Productos
+                //.Where(x => x.estado == true)
+            var query = _dbContext.Productos
                 .Join(_dbContext.Categoria,
                     p => p.Categoria.Id,
                     c => c.Id,
@@ -40,8 +40,14 @@ using System.Threading.Tasks;
                     Stock = dto.Producto.Stock,
                     Categoria = dto.Categoria.Nombre
                 }
-                )
-                .ToListAsync();
+                );
+
+            if (nombre != null) {
+                nombre = nombre.Trim().ToLower();
+                query = query.Where(x => EF.Functions.Like(x.Nombre.Trim().ToLower(), $"%{nombre}%"));
+            }
+
+            List<ProductoDTO> listproducto = await query.ToListAsync();
 
             //List<ProductoDTO> listProductoDTO = new List<ProductoDTO>();
             //foreach (Producto producto in listproducto)
@@ -63,7 +69,7 @@ using System.Threading.Tasks;
 
             return listproducto;
         }
-        public async Task<Response<string>> CrearProductoServices(CrearProductoDTO payload)
+        public async Task<Response<string>> CrearProductoService(CrearProductoDTO payload)
         {
             try
             {
@@ -83,7 +89,7 @@ using System.Threading.Tasks;
                     {
                         Code = HttpStatusCode.BadRequest,
                         Data = null,
-                        Message = "No se encontro el registro"
+                        Message = "No se encontro la categoria asignada"
                     };
                 }
 
@@ -119,11 +125,11 @@ using System.Threading.Tasks;
             }
         }
 
-        public async Task<Response<string>> ActualizarProductoServices(int idProducto, ActualizarProductoDTO payload)
+        public async Task<Response<string>> ActualizarProductoService(int idProducto, ActualizarProductoDTO payload)
         {
             try
             {
-                var producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
+                Producto producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
 
                 if (producto == null)
                 {
@@ -140,6 +146,8 @@ using System.Threading.Tasks;
                 //producto.Nombre = payload.Nombre;
                 //producto.CategoriaId = payload.CategoriaId;
                 _mapper.Map(payload, producto);
+                //_mapperProducto.productotodto(producto, payload);
+                //producto = _mapperProducto.productotodto(payload);
 
 
                 var productoActualizado = await _dbContext.SaveChangesAsync();
@@ -158,6 +166,42 @@ using System.Threading.Tasks;
                 {
                     Code = HttpStatusCode.InternalServerError,
                     Message = ex.Message,
+                    Data = null
+                };
+            }
+        }
+
+        public async Task<Response<string>> EliminacionFisicaProductoServices(int id)
+        {
+            try
+            {
+                var producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (producto == null)
+                {
+                    return new Response<string>()
+                    {
+                        Code = HttpStatusCode.BadRequest,
+                        Data = null,
+                        Message = $"No existe el producto con el id: {id}"
+                    };
+                }
+
+                var productoEliminado = _dbContext.Productos.Remove(producto);
+
+                return new Response<string>()
+                {
+                    Code = HttpStatusCode.OK,
+                    Message = "Producto Eliminado con exito",
+                    Data = productoEliminado.Entity.Id.ToString()
+                };
+            }
+            catch (Exception ex)
+            {
+                return new Response<string>()
+                {
+                    Code= HttpStatusCode.InternalServerError,
+                    Message= ex.Message,
                     Data = null
                 };
             }
