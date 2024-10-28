@@ -21,7 +21,7 @@ public partial class Persona
     public string Email { get; set; }
 
     [Required]
-    public DateTime FechaNacimiento { get; set; }
+    public DateOnly FechaNacimiento { get; set; }
 
     public Usuario Usuario { get; set; }
 }

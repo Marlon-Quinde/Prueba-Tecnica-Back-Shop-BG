@@ -24,7 +24,7 @@ using System.Threading.Tasks;
             this._dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<List<ProductoDTO>> ObtenerProductosService(string nombre, bool estado)
+        public async Task<List<ProductoDTO>> ObtenerProductosService(string nombre, bool estado = true)
         {
                 //.Where(x => x.estado == true)
             var query = _dbContext.Productos
@@ -38,14 +38,16 @@ using System.Threading.Tasks;
                     Precio = dto.Producto.Precio,
                     Id = dto.Producto.Id,
                     Stock = dto.Producto.Stock,
-                    Categoria = dto.Categoria.Nombre
+                    Categoria = dto.Categoria.Nombre,
+                    Estado = dto.Producto.Estado
                 }
-                );
+                ).Where(x => x.Estado == estado); ;
 
             if (nombre != null) {
                 nombre = nombre.Trim().ToLower();
                 query = query.Where(x => EF.Functions.Like(x.Nombre.Trim().ToLower(), $"%{nombre}%"));
             }
+
 
             List<ProductoDTO> listproducto = await query.ToListAsync();
 
@@ -85,12 +87,7 @@ using System.Threading.Tasks;
 
                 if (categoria == null)
                 {
-                    return new Response<string>()
-                    {
-                        Code = HttpStatusCode.BadRequest,
-                        Data = null,
-                        Message = "No se encontro la categoria asignada"
-                    };
+                    throw new ExceptionResponse("No se encontro la categoria asignada");
                 }
 
                 Producto productoNuevo = new Producto()
@@ -129,16 +126,11 @@ using System.Threading.Tasks;
         {
             try
             {
-                Producto producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
+                var producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
 
                 if (producto == null)
                 {
-                    return new Response<string>()
-                    {
-                        Code = HttpStatusCode.BadRequest,
-                        Message = $"No existe el producto con id: {idProducto}",
-                        Data = null
-                    };
+                    throw new ExceptionResponse($"No existe el producto con id: {idProducto}");
                 }
 
                 //producto.Stock = payload.Stock;
@@ -179,12 +171,7 @@ using System.Threading.Tasks;
 
                 if (producto == null)
                 {
-                    return new Response<string>()
-                    {
-                        Code = HttpStatusCode.BadRequest,
-                        Data = null,
-                        Message = $"No existe el producto con el id: {id}"
-                    };
+                    throw new ExceptionResponse($"No existe el producto con el id: {id}");
                 }
 
                 var productoEliminado = _dbContext.Productos.Remove(producto);

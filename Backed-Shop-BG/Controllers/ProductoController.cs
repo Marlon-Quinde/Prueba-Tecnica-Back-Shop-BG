@@ -21,11 +21,12 @@ namespace Backed_Shop_BG.Controllers
         }
 
         [HttpGet("listado")]
-        public async Task<IActionResult> GetProductos([FromQuery] string? nombre)
+        public async Task<IActionResult> GetProductos([FromQuery] string? nombre, [FromQuery] string? estado = "A")
         {
             try
             {
-                var listadoProductos = await _productoService.ObtenerProductosService(nombre);
+                bool estadoFiltro = estado == "A";
+                var listadoProductos = await _productoService.ObtenerProductosService(nombre, estadoFiltro);
                 return Ok(
                     new Response<List<ProductoDTO>>()
                     { 

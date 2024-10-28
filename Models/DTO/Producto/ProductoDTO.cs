@@ -16,6 +16,8 @@ namespace Models.DTO
 
         public decimal Precio { get; set; }
 
+        public bool Estado { get; set; }
+
         public string Categoria { get; set; }
     }
 }

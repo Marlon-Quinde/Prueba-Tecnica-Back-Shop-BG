@@ -22,7 +22,7 @@ public partial class Producto
     public decimal Precio { get; set; }
 
     [Required]
-    public bool estado { get; set; } = true;
+    public bool Estado { get; set; } = true;
 
     [Required]
     public int CategoriaId { get; set; }
