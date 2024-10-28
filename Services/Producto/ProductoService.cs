@@ -26,7 +26,6 @@ using System.Threading.Tasks;
         }
         public async Task<List<ProductoDTO>> ObtenerProductosService(string nombre, bool estado = true)
         {
-                //.Where(x => x.estado == true)
             var query = _dbContext.Productos
                 .Join(_dbContext.Categoria,
                     p => p.Categoria.Id,
@@ -50,25 +49,6 @@ using System.Threading.Tasks;
 
 
             List<ProductoDTO> listproducto = await query.ToListAsync();
-
-            //List<ProductoDTO> listProductoDTO = new List<ProductoDTO>();
-            //foreach (Producto producto in listproducto)
-            //{
-            //    ProductoDTO productoDTO = new ProductoDTO();
-            //    productoDTO.Nombre = producto.Nombre;
-            //    productoDTO.Precio = producto.Precio;
-            //    productoDTO.Id = producto.Id;
-
-
-            //        var categoria = _dbContext.Categoria
-            //            .Where(a => a.Id == producto.IdCategoria)
-            //            .Select(a => a.Nombre)
-            //            .ToList();
-            //    productoDTO.Categoria = categoria.First();
-
-            //    listProductoDTO.Add(productoDTO);
-            //}
-
             return listproducto;
         }
         public async Task<Response<string>> CrearProductoService(CrearProductoDTO payload)
@@ -126,18 +106,18 @@ using System.Threading.Tasks;
         {
             try
             {
-                var producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
+                Producto? producto = await _dbContext.Productos.FirstOrDefaultAsync(x => x.Id == idProducto);
 
                 if (producto == null)
                 {
                     throw new ExceptionResponse($"No existe el producto con id: {idProducto}");
                 }
 
+                _mapper.Map(payload, producto);
                 //producto.Stock = payload.Stock;
                 //producto.Precio = payload.Precio;
                 //producto.Nombre = payload.Nombre;
                 //producto.CategoriaId = payload.CategoriaId;
-                _mapper.Map(payload, producto);
                 //_mapperProducto.productotodto(producto, payload);
                 //producto = _mapperProducto.productotodto(payload);
 

@@ -1,6 +1,7 @@
 ﻿using DataContext;
 using Helpers;
 using Microsoft.EntityFrameworkCore;
+using Models;
 using Models.DTO.Auth;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,15 @@ namespace Services.Auth
         {
             try
             {
-                var existePersona = await _shopContext.Personas.FirstOrDefaultAsync( x => x.Email.Contains(payload.Email));
+                Persona? existePersona = await _shopContext.Personas.FirstOrDefaultAsync(x => x.Email.Contains(payload.Email));
                 if (existePersona == null) 
                 {
                     throw new ExceptionResponse("Este persona no se encuentra registrada en el sistema");
                 }
+
                 return null;
+                
+
 
             }
             catch (Exception ex)
