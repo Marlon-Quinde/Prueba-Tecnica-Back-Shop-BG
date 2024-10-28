@@ -12,6 +12,9 @@ public partial class Persona
     public int Id { get; set; }
 
     [Required]
+    public string Identificacion { get; set; }
+
+    [Required]
     public string Nombres { get; set; }
 
     [Required]

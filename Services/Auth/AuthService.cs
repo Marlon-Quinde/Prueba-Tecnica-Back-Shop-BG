@@ -28,14 +28,16 @@ namespace Services.Auth
         {
             try
             {
-                Persona? existePersona = await _shopContext.Personas.FirstOrDefaultAsync(x => x.Email.Contains(payload.Email));
+                Persona? existePersona = await _shopContext.Personas.FirstOrDefaultAsync(x => x.Identificacion.Contains(payload.Identificacion));
                 if (existePersona == null) 
                 {
                     throw new ExceptionResponse("Este persona no se encuentra registrada en el sistema");
                 }
 
-                return null;
+
                 
+                
+                return null;
 
 
             }
