@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataContext.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20241014130935_Producto")]
-    partial class Producto
+    [Migration("20241029202334_UpdateTableCategoria")]
+    partial class UpdateTableCategoria
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace DataContext.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Models.Categoria", b =>
+            modelBuilder.Entity("Models.Entities.Categoria", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -42,10 +42,10 @@ namespace DataContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categoria");
+                    b.ToTable("Categorias");
                 });
 
-            modelBuilder.Entity("Models.Persona", b =>
+            modelBuilder.Entity("Models.Entities.Persona", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -61,8 +61,12 @@ namespace DataContext.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("FechaNacimiento")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Identificacion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nombres")
                         .IsRequired()
@@ -73,7 +77,7 @@ namespace DataContext.Migrations
                     b.ToTable("Personas");
                 });
 
-            modelBuilder.Entity("Models.Producto", b =>
+            modelBuilder.Entity("Models.Entities.Producto", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -83,6 +87,9 @@ namespace DataContext.Migrations
 
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
@@ -94,9 +101,6 @@ namespace DataContext.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<bool>("estado")
-                        .HasColumnType("bit");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CategoriaId");
@@ -104,7 +108,7 @@ namespace DataContext.Migrations
                     b.ToTable("Productos");
                 });
 
-            modelBuilder.Entity("Models.Usuario", b =>
+            modelBuilder.Entity("Models.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -112,12 +116,12 @@ namespace DataContext.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("IdPersona")
-                        .HasColumnType("int");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PersonaId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -125,15 +129,15 @@ namespace DataContext.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPersona")
+                    b.HasIndex("PersonaId")
                         .IsUnique();
 
                     b.ToTable("Usuarios");
                 });
 
-            modelBuilder.Entity("Models.Producto", b =>
+            modelBuilder.Entity("Models.Entities.Producto", b =>
                 {
-                    b.HasOne("Models.Categoria", "Categoria")
+                    b.HasOne("Models.Entities.Categoria", "Categoria")
                         .WithMany("Productos")
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -142,23 +146,23 @@ namespace DataContext.Migrations
                     b.Navigation("Categoria");
                 });
 
-            modelBuilder.Entity("Models.Usuario", b =>
+            modelBuilder.Entity("Models.Entities.Usuario", b =>
                 {
-                    b.HasOne("Models.Persona", "Persona")
+                    b.HasOne("Models.Entities.Persona", "Persona")
                         .WithOne("Usuario")
-                        .HasForeignKey("Models.Usuario", "IdPersona")
+                        .HasForeignKey("Models.Entities.Usuario", "PersonaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Persona");
                 });
 
-            modelBuilder.Entity("Models.Categoria", b =>
+            modelBuilder.Entity("Models.Entities.Categoria", b =>
                 {
                     b.Navigation("Productos");
                 });
 
-            modelBuilder.Entity("Models.Persona", b =>
+            modelBuilder.Entity("Models.Entities.Persona", b =>
                 {
                     b.Navigation("Usuario")
                         .IsRequired();

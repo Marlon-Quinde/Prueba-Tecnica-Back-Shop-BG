@@ -5,28 +5,28 @@ using System.Net;
 using Models.DTO.Producto;
 using Services;
 using Models.DTO;
+using Services.ProductoService;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Backed_Shop_BG.Controllers
 {
-    [Route("api/productos")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class ProductoController : ControllerBase
+    public class ProductosController : ControllerBase
     {
-        private readonly IProductoService _productoService;
-        public ProductoController(IProductoService productoService)
+        private readonly IProductoServices _productoService;
+        public ProductosController(IProductoServices productoService)
         {
             _productoService = productoService;
         }
 
-        [HttpGet("listado")]
+        [HttpGet]
         public async Task<IActionResult> GetProductos([FromQuery] string? nombre, [FromQuery] string? estado = "A")
         {
             try
             {
-                bool estadoFiltro = estado == "A";
-                var listadoProductos = await _productoService.ObtenerProductosService(nombre, estadoFiltro);
+                var listadoProductos = await _productoService.ObtenerProductosService(nombre, estado == "A");
                 return Ok(
                     new Response<List<ProductoDTO>>()
                     { 
@@ -52,7 +52,7 @@ namespace Backed_Shop_BG.Controllers
         }
 
 
-        [HttpPost("crear")]
+        [HttpPost]
         public async Task<IActionResult> CrearProducto(CrearProductoDTO producto) 
         {
             try
@@ -71,7 +71,7 @@ namespace Backed_Shop_BG.Controllers
             }
         }
 
-        [HttpPut("actualizar/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> ActualizarProductoController(int id, ActualizarProductoDTO payload)
         {
             try
@@ -89,7 +89,6 @@ namespace Backed_Shop_BG.Controllers
                 }
                 );
             }
-            return null;
         }
     }
 }

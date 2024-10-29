@@ -2,10 +2,10 @@
 using DataContext;
 using Helpers;
 using Microsoft.EntityFrameworkCore;
-using Models;
 using Models.DTO;
 using Models.DTO.Categoria;
 using Models.DTO.Producto;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,21 +13,21 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
- namespace Services
+namespace Services.ProductoService
 {
-    public class ProductoService : IProductoService
+    public class ProductoServices : IProductoServices
     {
         private readonly ShopContext _dbContext;
         private readonly IMapper _mapper;
-        public ProductoService(ShopContext dbContext, IMapper mapper)
+        public ProductoServices(ShopContext dbContext, IMapper mapper)
         {
             this._dbContext = dbContext;
             _mapper = mapper;
         }
-        public async Task<List<ProductoDTO>> ObtenerProductosService(string nombre, bool estado = true)
+        public async Task<List<ProductoDTO>> ObtenerProductosService(string? nombre, bool estado = true)
         {
             var query = _dbContext.Productos
-                .Join(_dbContext.Categoria,
+                .Join(_dbContext.Categorias,
                     p => p.Categoria.Id,
                     c => c.Id,
                     (p, c) => new { Producto = p, Categoria = c })
@@ -56,7 +56,7 @@ using System.Threading.Tasks;
             try
             {
                 var idProducto = payload.CategoriaId;
-                var categoria = await _dbContext.Categoria.Select(
+                var categoria = await _dbContext.Categorias.Select(
                     cat => new CategoriaDTO()
                     {
                         Id = cat.Id,

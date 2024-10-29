@@ -2,6 +2,8 @@ using AutoMapperDemo;
 using DataContext;
 using Microsoft.EntityFrameworkCore;
 using Services;
+using Services.CategoriaService;
+using Services.ProductoService;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,8 +23,8 @@ builder.Services.AddAutoMapper(typeof(ProductoMapper));
 
 // ? Inyección de Dependencia
 // ! Producto
-builder.Services.AddScoped<IProductoService, ProductoService>();
-
+builder.Services.AddScoped<IProductoServices, ProductoServices>();
+builder.Services.AddScoped<ICategoriaServices, CategoriaServices>();
 
 
 var app = builder.Build();

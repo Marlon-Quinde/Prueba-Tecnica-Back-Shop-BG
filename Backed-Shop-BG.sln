@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backed-Shop-BG", "Backed-Shop-BG\Backed-Shop-BG.csproj", "{EF3CF07A-563F-4454-84ED-B547103AAAF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microservices", "Backed-Shop-BG\Microservices.csproj", "{EF3CF07A-563F-4454-84ED-B547103AAAF3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{72D4479B-2FD3-47D5-AAA4-DAA8D35FD2A9}"
 EndProject
@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Helpers", "Helpers\Helpers.csproj", "{64488714-933D-4C78-8E71-ADA170F0BA84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoMapperDemo", "AutoMapperDemo\AutoMapperDemo.csproj", "{9C1F3EEE-63DE-4512-886C-39E659D6E5D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AutoMapperDemo", "AutoMapperDemo\AutoMapperDemo.csproj", "{9C1F3EEE-63DE-4512-886C-39E659D6E5D1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Models;
 using Models.DTO;
 using Models.DTO.Producto;
+using Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

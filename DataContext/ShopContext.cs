@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Models;
+using Models.Entities;
 
 namespace DataContext;
 
@@ -12,7 +12,7 @@ public partial class ShopContext : DbContext
     {
     }
 
-    public virtual DbSet<Categoria> Categoria { get; set; }
+    public virtual DbSet<Categoria> Categorias { get; set; }
 
     public virtual DbSet<Persona> Personas { get; set; }
 
@@ -20,13 +20,6 @@ public partial class ShopContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        modelBuilder.Entity<Usuario>()
-            .HasOne(u => u.Persona)
-            .WithOne(p => p.Usuario) 
-            .HasForeignKey<Usuario>(u => u.IdPersona);
-    }
 
 
 
